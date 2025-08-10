@@ -1,0 +1,116 @@
+/* ───────────────────────────────────────────────
+   Mobile layout & polish  (≤ 600 px)
+   ─────────────────────────────────────────────── */
+@media (max-width: 600px) {
+
+    /* 0.  Base typography — 14 px body, but *all* tappable
+          controls are 16 px+ so Safari never zooms.          */
+    html, body { font-size: 16px; }
+
+    /* 1.  Chat log -------------------------------------------------- */
+    #chat-log {
+        padding: 0.75rem;
+        font-size: 16px;
+        line-height: 1.5;
+    }
+
+    input[type="color"],
+    input[type="date"],
+    input[type="datetime"],
+    input[type="datetime-local"],
+    input[type="email"],
+    input[type="month"],
+    input[type="number"],
+    input[type="password"],
+    input[type="search"],
+    input[type="tel"],
+    input[type="text"],
+    input[type="time"],
+    input[type="url"],
+    input[type="week"],
+    select:focus,
+    textarea {
+        font-size: 16px;
+    }
+
+    /* each message block: two-row grid + accent bar                */
+    .logline {
+        display: grid;
+        grid-template-columns: max-content 1fr;   /* auto width for time */
+        grid-template-areas:
+            "timestamp user"
+            "msg       msg";
+        gap: 0.25rem 0.5ch;                       /* row / col gaps */
+        padding: 0.5rem 0.75rem 0.5rem 0.90rem;   /* room for bar */
+        border-left: 2px solid var(--ctp-surface2);
+        margin-block: 0.25rem;                    /* bar gets a gap */
+    }
+
+    .col.timestamp {
+        grid-area: timestamp;
+        font-size: 0.75rem;
+        color: var(--ctp-overlay0);
+        text-align: right;
+        white-space: nowrap;                      /* never wraps */
+    }
+
+    .col.user {
+        grid-area: user;
+        font-weight: bold;
+        text-align: left;
+        overflow-wrap: anywhere;                  /* long nicks wrap */
+    }
+
+    .col.msg {
+        grid-area: msg;
+        border: none;
+        padding: 0;
+        margin: 0;
+        word-break: break-word;
+    }
+
+    /* join / quit lines: no accent bar                                    */
+    .join .logline,
+    .quit .logline {
+        border-left-color: transparent;
+        padding-left: 0.75rem;
+    }
+
+    /* 2.  Composer --------------------------------------------------- */
+    #input-form {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem;
+        border-top: 1px solid var(--ctp-surface2);
+        background: var(--ctp-surface0);
+    }
+
+    #input-form input {
+        flex: 1;
+        font-family: monospace;
+        font-size: 16px;                   /* ≥16px prevents zoom on focus */
+        min-height: 2.75rem;               /* ≈44 px tap target */
+        padding: 0.5rem;
+        border: 1px solid var(--ctp-overlay0);
+        border-radius: 5px;
+        background: var(--ctp-surface1);
+        color: var(--ctp-text);
+    }
+
+    #input-form button {
+        font-family: monospace;
+        font-size: 16px;                   /* ≥16px prevents zoom on tap   */
+        min-height: 2.75rem;               /* same 44 px tap target        */
+        padding: 0 1.1rem;
+        background: var(--ctp-blue);
+        color: var(--ctp-base);
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        width: auto;                       /* natural width, no full bleed */
+        touch-action: manipulation;        /* double-tap ≠ zoom            */
+        -webkit-tap-highlight-color: transparent;
+    }
+}

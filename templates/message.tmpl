@@ -1,0 +1,19 @@
+{{define "message"}}
+    <div id="chat-log" hx-swap-oob="beforeend">
+        <div class="logline {{.Type}}" id="{{.ID}}">
+            <div class="col timestamp">{{ .Time.Format "[15:04:05]" }}</div>
+            <div class="col user" {{if .Color}}style="color:{{.Color}};"{{end}}>{{.Nick}}</div>
+            <div class="col msg">{{.Body}}</div>
+        </div>
+    </div>
+{{end}}
+
+{{define "message-reset"}}
+    <div id="chat-log" hx-swap-oob="innerHTML"></div>
+{{end}}
+
+{{if eq .Type "reset"}}
+    {{template "message-reset" .}}
+{{else}}
+    {{template "message" .}}
+{{end}}

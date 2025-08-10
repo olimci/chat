@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1 maximum-scale=1">
+    <title>e74chat</title>
+    <link rel="stylesheet" href="/static/room.css">
+    <link rel="stylesheet" href="/static/mobile.css">
+    <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.6/dist/htmx.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/htmx-ext-ws@2.0.2"></script>
+</head>
+<body
+        hx-ext="ws"
+        ws-connect="/ws">
+
+<div id="chat-log"
+     ws-receive="message"
+     hx-swap-oob="beforeend">
+</div>
+
+<form id="input-form"
+      hx-swap="none"
+      hx-on::ws-after-send="this.reset()">
+    <input id="msg"
+           type="text"
+           name="message"
+           placeholder="Type a message…"
+           autocomplete="off"
+           required>
+
+    <button type="submit"
+            ws-send
+            ws-send-headers='{"X-Nick":"{{.Nick}}"}'>
+        Send
+    </button>
+</form>
+
+<script>
+    document.body.addEventListener("htmx:afterSwap", (e) => {
+        const log = e.target;
+        if (log.id !== "chat-log") return;
+
+        const threshold = 100;
+        const atBottom = log.scrollTop + log.clientHeight >= log.scrollHeight - threshold;
+
+        if (atBottom) {
+            log.scrollTop = log.scrollHeight;
+        }
+    });
+</script>
+</body>
+</html>
