@@ -1,0 +1,23 @@
+# Go build output
+bin/
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Test binaries
+*.test
+
+# Go coverage files
+*.out
+
+# Dependency directories (if any vendored)
+vendor/
+
+# IDE settings
+.idea/
+*.iml
+
+# macOS / system files
+.DS_Store
